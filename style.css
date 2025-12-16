@@ -271,20 +271,21 @@ nav {
 }
 
 .verse-block p:first-of-type {
-    font-family: var(--font-sanskrit-body);
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-    color: #111;
+    font-family: var(--font-sanskrit-heading);
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
     white-space: pre-line;
 }
 
 .verse-block p:last-of-type {
     font-family: var(--font-english);
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     line-height: 1.8;
-    color: #555;
+    color: var(--text-secondary);
+    font-style: italic;
     white-space: pre-line;
 }
 
@@ -351,7 +352,7 @@ footer a:hover {
     }
 
     .verse-block p:first-of-type {
-        font-size: 1.6rem;
+        font-size: 2.2rem;
     }
 
     footer {
