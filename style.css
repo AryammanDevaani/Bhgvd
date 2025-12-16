@@ -322,57 +322,51 @@ footer a:hover {
     .container {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
-        width: 100%;
-        overflow-x: hidden;
-    }
-
-    #sanskrit-text {
-        font-size: 1.8rem;
-        line-height: 1.5;
-        margin-top: 5rem;
-        
-        overflow-wrap: break-word; 
-        word-wrap: break-word;
-        max-width: 100%;
-    }
-    
-    #translation-text {
-        font-size: 1.1rem;
-        overflow-wrap: break-word;
+        padding-top: 1rem;
+        padding-bottom: 5rem;
     }
 
     .verse-block, 
-    #verse-content {
-        width: 100%;
+    #reader-content {
+        width: 88% !important;
+        margin-left: auto;
+        margin-right: auto;
         max-width: 100%;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
     }
 
+    #sanskrit-text, 
+    .verse-block p {
+        overflow-wrap: break-word; 
+        word-wrap: break-word;
+        hyphens: auto;
+    }
+
+    #sanskrit-text {
+        font-size: 2.2rem;
+        margin-top: 5rem;
+    }
+    
     #reader-content h2 {
-        font-size: 2rem;
-        overflow-wrap: break-word;
+        font-size: 2.5rem;
     }
 
     .verse-block p:first-of-type {
-        font-size: 1.5rem;
-        overflow-wrap: break-word;
+        font-size: 1.6rem;
+    }
+
+    footer {
+        padding-bottom: 2rem;
+        font-size: 0.85rem;
     }
 
     nav {
         justify-content: center;
-        gap: 1rem;
+        gap: 1.5rem;
         flex-direction: column;
-        padding: 1rem;
+        padding: 1.5rem 1rem;
     }
 
     .logo {
         margin-bottom: 0.5rem;
-        font-size: 1.3rem;
-    }
-
-    footer {
-        padding: 2rem 1rem;
-        font-size: 0.8rem;
     }
 }
