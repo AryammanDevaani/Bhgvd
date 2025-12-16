@@ -1,12 +1,4 @@
-/**
- * Modern Gita - Final Logic
- */
-
 let gitaData = [];
-
-// ==========================================
-// 1. DATA CONSTANTS
-// ==========================================
 
 const chapterTitlesEnglish = [
     "The Distress of Arjuna", "The Path of Knowledge", "The Path of Selfless Action",
@@ -26,37 +18,27 @@ const chapterTitlesSanskrit = [
     "दैवासुरसंपद्विभागयोग", "श्रद्धात्रयविभागयोग", "मोक्षसंन्यासयोग"
 ];
 
-// ==========================================
-// 2. APP INITIALIZATION
-// ==========================================
 
 window.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('gita.json');
         if (!response.ok) throw new Error("File not found");
         const rawData = await response.json();
-
-        // SMART DATA CLEANING
         gitaData = rawData.map(item => {
-            // Clean Sanskrit
             let cleanSanskrit = (item.text || item.shloka || item.sanskrit || "")
-                .replace(/\n/g, " ")
                 .replace(/[0-9.|]+$/g, '')
                 .trim();
 
             if (cleanSanskrit && !cleanSanskrit.endsWith("।") && !cleanSanskrit.endsWith("॥")) {
                 cleanSanskrit += " ।।";
             }
-
-            // Determine English (Fallbacks included)
             let rawEnglish = item.translation ||
                 item.meaning ||
                 item.english_meaning ||
                 item.transliteration ||
                 item.word_meanings ||
                 "Meaning unavailable.";
-
-            let cleanEnglish = rawEnglish.replace(/\n/g, " ").trim();
+            let cleanEnglish = rawEnglish.trim();
 
             return {
                 chapter: item.chapter || item.chapter_number || item.chapter_id,
@@ -66,7 +48,6 @@ window.addEventListener('DOMContentLoaded', async () => {
             };
         });
 
-        // Sort Data
         gitaData.sort((a, b) => {
             if (a.chapter === b.chapter) return a.verse - b.verse;
             return a.chapter - b.chapter;
@@ -85,30 +66,34 @@ function initApp() {
     renderChapterList();
 }
 
-// ==========================================
-// 3. NAVIGATION & ANIMATION
-// ==========================================
-
 const views = {
     home: document.getElementById('view-home'),
     chapters: document.getElementById('view-chapters'),
     reader: document.getElementById('view-reader')
 };
 
-document.getElementById('btn-home').addEventListener('click', () => switchView('home'));
-document.getElementById('btn-chapters').addEventListener('click', () => switchView('chapters'));
-document.getElementById('btn-back').addEventListener('click', () => switchView('chapters'));
+const btnHome = document.getElementById('btn-home');
+const btnChapters = document.getElementById('btn-chapters');
+
+btnHome.addEventListener('click', () => switchView('home'));
+btnChapters.addEventListener('click', () => switchView('chapters'));
 
 function switchView(viewName) {
     Object.values(views).forEach(el => el.classList.add('hidden'));
     views[viewName].classList.remove('hidden');
-
     document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+
     if (viewName === 'home') {
-        document.getElementById('btn-home').classList.add('active');
-        if (gitaData.length > 0) showRandomVerse(); // Shuffle on Home click
-    } else {
-        document.getElementById('btn-chapters').classList.add('active');
+        btnHome.classList.add('active');
+        btnChapters.textContent = "Read All";
+    }
+    else if (viewName === 'chapters') {
+        btnChapters.classList.add('active');
+        btnChapters.textContent = "Read All";
+    }
+    else if (viewName === 'reader') {
+        btnChapters.classList.add('active');
+        btnChapters.textContent = "Back";
     }
 
     window.scrollTo(0, 0);
@@ -126,10 +111,6 @@ function fadeContent() {
         main.style.transform = 'translateY(0)';
     }, 50);
 }
-
-// ==========================================
-// 4. CORE FEATURES
-// ==========================================
 
 function showRandomVerse() {
     if (gitaData.length === 0) return;
@@ -152,7 +133,7 @@ function renderChapterList() {
         const card = document.createElement('div');
         card.className = 'chapter-card';
         card.innerHTML = `
-            <div style="font-size: 0.8rem; color: #B45309; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem;">Chapter ${i}</div>
+            <div style="font-size: 0.8rem; color: #B45309; font-family: var(--font-english); font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem;">Chapter ${i}</div>
             <h3 style="margin-bottom: 0.5rem;">${chapterTitlesSanskrit[i - 1]}</h3>
             <p>${chapterTitlesEnglish[i - 1]}</p>
         `;
@@ -166,10 +147,10 @@ function openChapter(chapterNum) {
     const container = document.getElementById('reader-content');
 
     container.innerHTML = `
-        <div style="text-align:center; margin-bottom: 4rem; border-bottom: 1px solid #eee; padding-bottom: 2rem;">
-            <span style="color: #B45309; font-weight: bold; text-transform: uppercase; font-size: 0.9rem;">Chapter ${chapterNum}</span>
+        <div style="text-align:center; margin-bottom: 4rem; padding-bottom: 2rem;">
+            <span style="color: #B45309; font-family: var(--font-english); font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Chapter ${chapterNum}</span>
             <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem;">${chapterTitlesSanskrit[chapterNum - 1]}</h2>
-            <p style="color: #666; font-style:italic;">${chapterTitlesEnglish[chapterNum - 1]}</p>
+            <p style="color: #666; font-family: var(--font-english); font-style:italic;">${chapterTitlesEnglish[chapterNum - 1]}</p>
         </div>
     `;
 
@@ -177,9 +158,9 @@ function openChapter(chapterNum) {
         const div = document.createElement('div');
         div.className = 'verse-block';
         div.innerHTML = `
-            <span style="display:inline-block; background: #F3F4F6; color: #374151; font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 99px; margin-bottom: 1.5rem;">Verse ${v.verse}</span>
-            <p style="font-size: 1.8rem; line-height: 1.8; margin-bottom: 1.5rem; color: #111;">${v.sanskrit}</p>
-            <p style="font-size: 1.3rem; color: #555; line-height: 1.8; font-style:italic;">${v.translation}</p>
+            <span class="verse-pill" style="margin-bottom: 1.5rem;">Verse ${v.verse}</span>
+            <p>${v.sanskrit}</p>
+            <p>${v.translation}</p>
         `;
         container.appendChild(div);
     });

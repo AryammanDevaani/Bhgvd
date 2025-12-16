@@ -1,40 +1,82 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('fonts/Inter-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('fonts/Inter-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('fonts/PlayfairDisplay-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('fonts/PlayfairDisplay-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('fonts/PlayfairDisplay-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('fonts/PlayfairDisplay-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Rozha One';
+    src: url('fonts/RozhaOne-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Arya';
+    src: url('fonts/Arya-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
 :root {
-    /* Premium Color Palette */
     --bg-color: #F9F7F2;
-    /* Warm Parchment */
     --card-bg: #FFFFFF;
-    /* Crisp White */
     --text-primary: #2D2D2D;
-    /* Charcoal */
     --text-secondary: #666666;
-    /* Soft Grey */
     --accent-gold: #B45309;
-    /* Deep Saffron */
     --accent-light: #FFF7ED;
-    /* Light Cream */
-
-    /* UNIFIED TYPOGRAPHY */
-    --font-main: 'Playfair Display', serif;
-
-    /* Premium Shadows */
+    --font-english: 'Playfair Display', serif;
+    --font-sanskrit-heading: 'Rozha One', serif;
+    --font-sanskrit-body: 'Arya', sans-serif;
     --shadow-soft: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
     --shadow-hover: 0 20px 50px -10px rgba(0, 0, 0, 0.12);
 }
 
-/* HIDE SCROLLBAR (But allow scrolling) */
 html {
     scrollbar-width: none;
-    /* Firefox */
     -ms-overflow-style: none;
-    /* IE */
 }
 
 body::-webkit-scrollbar {
     display: none;
-    /* Chrome/Safari */
 }
 
-/* GLOBAL RESET */
 * {
     margin: 0;
     padding: 0;
@@ -44,7 +86,7 @@ body::-webkit-scrollbar {
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
-    font-family: var(--font-main);
+    font-family: var(--font-english);
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
     display: flex;
@@ -52,7 +94,6 @@ body {
     overflow-x: hidden;
 }
 
-/* NAVIGATION */
 nav {
     display: flex;
     justify-content: space-between;
@@ -64,9 +105,8 @@ nav {
 }
 
 .logo {
-    font-weight: 700;
-    font-size: 1.4rem;
-    letter-spacing: 0.05em;
+    font-family: var(--font-sanskrit-heading);
+    font-size: 1.5rem;
     color: var(--text-primary);
 }
 
@@ -74,14 +114,17 @@ nav {
     background: none;
     border: none;
     cursor: pointer;
-    font-family: var(--font-main);
+    font-family: var(--font-english);
     color: var(--text-secondary);
     font-size: 1rem;
     font-weight: 600;
     font-style: italic;
     letter-spacing: 0.02em;
     padding: 0.5rem 0;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
+    width: 110px;
+    text-align: center;
+    display: inline-block;
 }
 
 .nav-link:hover,
@@ -90,7 +133,6 @@ nav {
     border-bottom: 2px solid var(--accent-gold);
 }
 
-/* MAIN CONTAINER */
 .container {
     flex: 1;
     display: flex;
@@ -101,52 +143,71 @@ nav {
     max-width: 900px;
     margin: 0 auto;
     width: 100%;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.1s ease;
 }
 
-/* HOME VIEW */
 .verse-card {
     text-align: center;
     position: relative;
     width: 100%;
-    padding: 1rem;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #verse-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100%;
 }
 
-#verse-reference {
+.verse-meta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+
+#verse-reference,
+.verse-pill {
     background-color: var(--accent-light);
     color: var(--accent-gold);
+    font-family: var(--font-english);
     padding: 0.6rem 1.5rem;
     border-radius: 100px;
     font-size: 0.9rem;
     font-weight: 700;
     font-style: italic;
     border: 1px solid rgba(180, 83, 9, 0.1);
+    display: inline-block;
 }
 
 #sanskrit-text {
-    font-size: 2.4rem;
-    line-height: 1.6;
+    font-family: var(--font-sanskrit-heading);
+    font-size: 3rem;
+    line-height: 1.5;
     color: var(--text-primary);
-    font-weight: 700;
+    font-weight: 400;
     max-width: 800px;
+    margin: 0 auto;
+    margin-top: 6rem;
     margin-bottom: 2rem;
+    white-space: pre-line;
 }
 
 #translation-text {
+    font-family: var(--font-english);
     font-size: 1.4rem;
     color: var(--text-secondary);
     line-height: 1.8;
     max-width: 700px;
+    margin: 0 auto;
     font-style: italic;
+    white-space: pre-line;
 }
 
-/* CHAPTER GRID */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -176,7 +237,9 @@ nav {
 }
 
 .chapter-card h3 {
-    font-size: 1.5rem;
+    font-family: var(--font-sanskrit-body);
+    font-size: 1.8rem;
+    font-weight: 700;
     margin: 0.5rem 0;
     color: var(--text-primary);
 }
@@ -186,28 +249,17 @@ nav {
     color: var(--text-secondary);
 }
 
-/* READER VIEW */
-.btn-text {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-family: var(--font-main);
-    font-size: 1.1rem;
-    font-style: italic;
-    cursor: pointer;
-    margin-bottom: 3rem;
-    align-self: flex-start;
-    padding-left: 0;
-}
-
-.btn-text:hover {
-    color: var(--accent-gold);
+#reader-content h2 {
+    font-family: var(--font-sanskrit-heading);
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+    color: var(--text-primary);
 }
 
 .verse-block {
     margin-bottom: 5rem;
     padding-bottom: 4rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     text-align: center;
     max-width: 750px;
     margin: 0 auto;
@@ -217,27 +269,128 @@ nav {
     border-bottom: none;
 }
 
-/* Utilities */
+.verse-block p:first-of-type {
+    font-family: var(--font-sanskrit-body);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #111;
+    white-space: pre-line;
+}
+
+.verse-block p:last-of-type {
+    font-family: var(--font-english);
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #555;
+    white-space: pre-line;
+}
+
 .hidden {
     display: none !important;
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+        padding-top: 1rem;
+        padding-bottom: 5rem;
+    }
+
     #sanskrit-text {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
+        margin-top: 5rem;
+    }
+
+    #reader-content h2 {
+        font-size: 2.5rem;
+    }
+
+    .verse-block p:first-of-type {
+        font-size: 1.6rem;
     }
 
     nav {
         justify-content: center;
-        gap: 1rem;
+        gap: 1.5rem;
         flex-direction: column;
+        padding: 1.5rem 1rem;
     }
 
     .logo {
         margin-bottom: 0.5rem;
     }
+}
 
-    .container {
-        padding: 1.5rem;
+footer {
+    text-align: center;
+    padding: 3rem 1rem;
+    margin-top: auto;
+    font-family: var(--font-english);
+
+    color: #000000;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    font-style: normal;
+
+    opacity: 1;
+}
+
+footer a {
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.1s ease;
+}
+
+footer a:hover {
+    border-bottom-style: solid;
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding-bottom: 2rem;
+        font-size: 0.85rem;
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 3rem 1rem;
+    margin-top: auto;
+
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    color: var(--text-primary);
+    font-size: 0.9rem;
+
+    line-height: 1.6;
+    font-style: normal;
+    opacity: 1;
+    letter-spacing: -0.01em;
+}
+
+footer a {
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dashed rgba(180, 83, 9, 0.3);
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    border-bottom-style: solid;
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding-bottom: 2rem;
+        font-size: 0.85rem;
     }
 }
