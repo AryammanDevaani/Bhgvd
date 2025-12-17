@@ -1,6 +1,4 @@
-# Allow all search engines to crawl the entire site
 User-agent: *
 Disallow: 
 
-# Link to your sitemap to help bots find all your pages
 Sitemap: https://www.bhgvd.com/sitemap.xml
