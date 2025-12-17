@@ -173,7 +173,7 @@ function openChapter(chapterNum) {
 
 
 
-const MY_WEBSITE_URL = "bg.rdvn.in";
+const MY_WEBSITE_URL = "bhgvd.com";
 const APP_TITLE = "Śrīmad Bhagavad Gītā";
 
 
