@@ -221,7 +221,7 @@ btnShare.addEventListener('click', async () => {
                 if (wrapper) {
                     wrapper.style.width = "550px"; // Forces a perfect card width in the image
                     wrapper.style.margin = "0 auto";
-                    wrapper.style.border = "2px solid #B45309";
+                    wrapper.style.border = "0px solid #B45309";
                 }
             }
         });

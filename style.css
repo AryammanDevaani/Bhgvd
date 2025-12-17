@@ -408,7 +408,7 @@ footer a:hover {
     background-color: var(--bg-color);
     padding: 3rem 2rem;
     border-radius: 0px;
-    border: 0px solid transparent;
+    border: 20px solid transparent;
     width: 100%;
 }
 
