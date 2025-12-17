@@ -24,7 +24,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch('gita.json');
         if (!response.ok) throw new Error("File not found");
         const rawData = await response.json();
-        
+
         gitaData = rawData.map(item => {
             let cleanSanskrit = (item.text || item.shloka || item.sanskrit || "")
                 .replace(/[0-9.|]+$/g, '')
@@ -117,7 +117,7 @@ function showRandomVerse() {
     if (gitaData.length === 0) return;
     const randomIndex = Math.floor(Math.random() * gitaData.length);
     const verse = gitaData[randomIndex];
-    
+
     currentVerseObj = verse;
 
     document.getElementById('loading').classList.add('hidden');
@@ -171,68 +171,12 @@ function openChapter(chapterNum) {
     switchView('reader');
 }
 
-const btnShare = document.getElementById('btn-share');
-const cardToCapture = document.getElementById('shareable-card-wrapper');
 
-const MY_WEBSITE_URL = "bg.rdvn.in"; 
+
+const MY_WEBSITE_URL = "bg.rdvn.in";
 const APP_TITLE = "Śrīmad Bhagavad Gītā";
 
-btnShare.addEventListener('click', async () => {
-    const originalBtnContent = btnShare.innerHTML;
-    btnShare.classList.add('loading');
 
-    const verseRefSpan = document.getElementById('verse-reference');
-    const cardFooterDiv = document.querySelector('.card-footer');
-    const originalRefText = verseRefSpan.textContent;
-
-    try {
-        verseRefSpan.textContent = `${APP_TITLE} \u00A0|\u00A0 ${originalRefText}`;
-        cardFooterDiv.textContent = MY_WEBSITE_URL;
-        cardFooterDiv.style.display = 'block';
-
-        cardToCapture.style.border = "2px solid #B45309";
-        cardToCapture.style.backgroundColor = "#FFF7ED"; 
-        
-        const canvas = await html2canvas(cardToCapture, {
-            scale: 3, 
-            useCORS: true,
-            backgroundColor: null
-        });
-
-        verseRefSpan.textContent = originalRefText; 
-        cardFooterDiv.style.display = 'none';
-        cardToCapture.style.border = "2px solid transparent";
-        cardToCapture.style.backgroundColor = "";
-
-        const dataURL = canvas.toDataURL('image/png');
-        const blob = dataURItoBlob(dataURL);
-        const file = new File([blob], 'verse.png', { type: 'image/png' });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({
-                files: [file],
-                title: 'Śrīmad Bhagavad Gītā Wisdom',
-                text: `Read more at ${MY_WEBSITE_URL}`
-            });
-        } else {
-            const link = document.createElement('a');
-            link.download = 'verse.png';
-            link.href = dataURL;
-            link.click();
-        }
-
-    } catch (err) {
-        console.error('Error creating/sharing image:', err);
-        verseRefSpan.textContent = originalRefText;
-        cardFooterDiv.style.display = 'none';
-        cardToCapture.style.border = "2px solid transparent";
-        cardToCapture.style.backgroundColor = "";
-
-    } finally {
-        btnShare.classList.remove('loading');
-        btnShare.innerHTML = originalBtnContent;
-    }
-});
 
 function dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(',')[1]);
@@ -244,3 +188,57 @@ function dataURItoBlob(dataURI) {
     }
     return new Blob([ab], { type: mimeString });
 }
+
+const btnShare = document.getElementById('btn-share');
+const cardToCapture = document.getElementById('shareable-card-wrapper');
+
+btnShare.addEventListener('click', async () => {
+    const originalIcon = btnShare.innerHTML;
+    btnShare.classList.add('loading');
+
+    const verseRefSpan = document.getElementById('verse-reference');
+    const originalRefText = verseRefSpan.textContent;
+
+    try {
+        const canvas = await html2canvas(cardToCapture, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#F9F7F2",
+            windowWidth: 800, // Forces the browser to think it's a desktop width
+            onclone: (clonedDoc) => {
+                // We modify the "Ghost Clone" instead of your actual screen
+                const footer = clonedDoc.querySelector('.card-footer');
+                const ref = clonedDoc.getElementById('verse-reference');
+                const wrapper = clonedDoc.getElementById('shareable-card-wrapper');
+
+                if (footer) {
+                    footer.style.display = 'block';
+                    footer.textContent = MY_WEBSITE_URL;
+                }
+                if (ref) {
+                    ref.textContent = `${APP_TITLE} \u00A0|\u00A0 ${originalRefText}`;
+                }
+                if (wrapper) {
+                    wrapper.style.width = "550px"; // Forces a perfect card width in the image
+                    wrapper.style.margin = "0 auto";
+                    wrapper.style.border = "2px solid #B45309";
+                }
+            }
+        });
+
+        const dataURL = canvas.toDataURL('image/png');
+        const blob = await (await fetch(dataURL)).blob();
+        const file = new File([blob], 'verse.png', { type: 'image/png' });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file], title: APP_TITLE });
+        } else {
+            const a = document.createElement('a'); a.download = 'verse.png'; a.href = dataURL; a.click();
+        }
+    } catch (err) {
+        console.error("Share failed", err);
+    } finally {
+        btnShare.classList.remove('loading');
+        btnShare.innerHTML = originalIcon;
+    }
+});
