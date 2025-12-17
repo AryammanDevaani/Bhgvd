@@ -414,7 +414,7 @@ footer a:hover {
 
 /* Hidden on site, visible in image */
 .card-footer {
-    font-family: var(--font-sanskrit-heading);
+    font-family: var(--font-logo);
     color: var(--accent-gold);
     font-size: 1.25rem;
     margin-top: 3rem;
