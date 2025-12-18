@@ -473,6 +473,11 @@ function updateInstallView() {
 // Desktop Hide Logic
 const navInstallBtn = document.getElementById('btn-install-view');
 const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-if (isMobileDevice && navInstallBtn) {
+
+// UPDATED LOGIC: Only show if Mobile AND NOT already installed
+if (isMobileDevice && !isStandalone && navInstallBtn) {
     navInstallBtn.style.display = 'block';
+} else if (navInstallBtn) {
+    // Force hide if installed (or desktop)
+    navInstallBtn.style.display = 'none';
 }
