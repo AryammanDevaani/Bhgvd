@@ -87,12 +87,10 @@ function switchView(viewName) {
     if (viewName === 'home') {
         btnHome.classList.add('active');
         btnChapters.textContent = "Read All";
-    }
-    else if (viewName === 'chapters') {
+    } else if (viewName === 'chapters') {
         btnChapters.classList.add('active');
         btnChapters.textContent = "Read All";
-    }
-    else if (viewName === 'reader') {
+    } else if (viewName === 'reader') {
         btnChapters.classList.add('active');
         btnChapters.textContent = "Back";
     }
@@ -117,12 +115,10 @@ function showRandomVerse() {
     if (gitaData.length === 0) return;
     const randomIndex = Math.floor(Math.random() * gitaData.length);
     const verse = gitaData[randomIndex];
-
     currentVerseObj = verse;
 
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('verse-content').classList.remove('hidden');
-
     document.getElementById('sanskrit-text').textContent = verse.sanskrit;
     document.getElementById('translation-text').textContent = verse.translation;
     document.getElementById('verse-reference').textContent = `Chapter ${verse.chapter} • Verse ${verse.verse}`;
@@ -171,12 +167,8 @@ function openChapter(chapterNum) {
     switchView('reader');
 }
 
-
-
 const MY_WEBSITE_URL = "bhgvd.com";
 const APP_TITLE = "Śrīmad Bhagavad Gītā";
-
-
 
 function dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(',')[1]);
@@ -195,7 +187,6 @@ const cardToCapture = document.getElementById('shareable-card-wrapper');
 btnShare.addEventListener('click', async () => {
     const originalIcon = btnShare.innerHTML;
     btnShare.classList.add('loading');
-
     const verseRefSpan = document.getElementById('verse-reference');
     const originalRefText = verseRefSpan.textContent;
 
@@ -204,9 +195,8 @@ btnShare.addEventListener('click', async () => {
             scale: 2,
             useCORS: true,
             backgroundColor: "#F9F7F2",
-            windowWidth: 800, // Forces the browser to think it's a desktop width
+            windowWidth: 800,
             onclone: (clonedDoc) => {
-                // We modify the "Ghost Clone" instead of your actual screen
                 const footer = clonedDoc.querySelector('.card-footer');
                 const ref = clonedDoc.getElementById('verse-reference');
                 const wrapper = clonedDoc.getElementById('shareable-card-wrapper');
@@ -219,7 +209,7 @@ btnShare.addEventListener('click', async () => {
                     ref.textContent = `${APP_TITLE} \u00A0|\u00A0 ${originalRefText}`;
                 }
                 if (wrapper) {
-                    wrapper.style.width = "550px"; // Forces a perfect card width in the image
+                    wrapper.style.width = "550px";
                     wrapper.style.margin = "0 auto";
                     wrapper.style.border = "0px solid #B45309";
                 }
@@ -233,7 +223,10 @@ btnShare.addEventListener('click', async () => {
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
             await navigator.share({ files: [file], title: APP_TITLE });
         } else {
-            const a = document.createElement('a'); a.download = 'verse.png'; a.href = dataURL; a.click();
+            const a = document.createElement('a');
+            a.download = 'verse.png';
+            a.href = dataURL;
+            a.click();
         }
     } catch (err) {
         console.error("Share failed", err);

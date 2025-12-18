@@ -4,56 +4,48 @@
     font-weight: 400;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'Inter';
     src: url('fonts/Inter-SemiBold.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'Playfair Display';
     src: url('fonts/PlayfairDisplay-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'Playfair Display';
     src: url('fonts/PlayfairDisplay-Italic.ttf') format('truetype');
     font-weight: 400;
     font-style: italic;
 }
-
 @font-face {
     font-family: 'Playfair Display';
     src: url('fonts/PlayfairDisplay-SemiBold.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'Playfair Display';
     src: url('fonts/PlayfairDisplay-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'Rozha One';
     src: url('fonts/RozhaOne-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'Arya';
     src: url('fonts/Arya-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
-
 :root {
     --bg-color: #F9F7F2;
     --card-bg: #FFFFFF;
@@ -69,22 +61,18 @@
     --shadow-soft: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
     --shadow-hover: 0 20px 50px -10px rgba(0, 0, 0, 0.12);
 }
-
 html {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-
 body::-webkit-scrollbar {
     display: none;
 }
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
@@ -95,7 +83,6 @@ body {
     flex-direction: column;
     overflow-x: hidden;
 }
-
 nav {
     display: flex;
     justify-content: space-between;
@@ -105,13 +92,11 @@ nav {
     margin: 0 auto;
     width: 100%;
 }
-
 .logo {
     font-family: var(--font-logo);
     font-size: 1.5rem;
     color: var(--text-primary);
 }
-
 .nav-link {
     background: none;
     border: none;
@@ -128,13 +113,11 @@ nav {
     text-align: center;
     display: inline-block;
 }
-
 .nav-link:hover,
 .nav-link.active {
     color: var(--accent-gold);
     border-bottom: 2px solid var(--accent-gold);
 }
-
 .container {
     flex: 1;
     display: flex;
@@ -147,7 +130,6 @@ nav {
     width: 100%;
     transition: opacity 0.1s ease;
 }
-
 .verse-card {
     text-align: center;
     position: relative;
@@ -157,17 +139,14 @@ nav {
     flex-direction: column;
     justify-content: center;
 }
-
 #verse-content {
     width: 100%;
 }
-
 .verse-meta {
     display: flex;
     justify-content: center;
     pointer-events: none;
 }
-
 #verse-reference,
 .verse-pill {
     background-color: var(--accent-light);
@@ -181,7 +160,6 @@ nav {
     border: 1px solid rgba(180, 83, 9, 0.1);
     display: inline-block;
 }
-
 #sanskrit-text {
     font-family: var(--font-sanskrit-heading);
     font-size: 3rem;
@@ -189,12 +167,9 @@ nav {
     color: var(--text-primary);
     font-weight: 400;
     max-width: 800px;
-    margin: 0 auto;
-    margin-top: 6rem;
-    margin-bottom: 2rem;
+    margin: 6rem auto 2rem auto;
     white-space: pre-line;
 }
-
 #translation-text {
     font-family: var(--font-english);
     font-size: 1.4rem;
@@ -205,14 +180,12 @@ nav {
     font-style: italic;
     white-space: pre-line;
 }
-
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
     width: 100%;
 }
-
 .chapter-card {
     background: var(--card-bg);
     padding: 2rem;
@@ -227,13 +200,11 @@ nav {
     flex-direction: column;
     justify-content: center;
 }
-
 .chapter-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-hover);
     border-color: var(--accent-light);
 }
-
 .chapter-card h3 {
     font-family: var(--font-sanskrit-body);
     font-size: 1.8rem;
@@ -241,12 +212,10 @@ nav {
     margin: 0.5rem 0;
     color: var(--text-primary);
 }
-
 .chapter-card p {
     font-style: italic;
     color: var(--text-secondary);
 }
-
 #reader-content h2 {
     font-family: var(--font-sanskrit-heading);
     font-size: 3.5rem;
@@ -254,7 +223,6 @@ nav {
     font-weight: 400;
     color: var(--text-primary);
 }
-
 .verse-block {
     margin-bottom: 5rem;
     padding-bottom: 4rem;
@@ -262,11 +230,6 @@ nav {
     max-width: 750px;
     margin: 0 auto;
 }
-
-.verse-block:last-child {
-    border-bottom: none;
-}
-
 .verse-block p:first-of-type {
     font-family: var(--font-sanskrit-heading);
     font-size: 3rem;
@@ -276,7 +239,6 @@ nav {
     color: var(--text-primary);
     white-space: pre-line;
 }
-
 .verse-block p:last-of-type {
     font-family: var(--font-english);
     font-size: 1.4rem;
@@ -285,7 +247,6 @@ nav {
     font-style: italic;
     white-space: pre-line;
 }
-
 footer {
     text-align: center;
     padding: 3rem 1rem;
@@ -294,35 +255,24 @@ footer {
     color: var(--text-primary);
     font-size: 0.9rem;
     line-height: 1.6;
-    font-style: normal;
-    opacity: 1;
     letter-spacing: -0.01em;
 }
-
 footer a {
     color: var(--accent-gold);
     text-decoration: none;
     font-weight: 600;
     transition: all 0.1s ease;
 }
-
 footer a:hover {
     border-bottom-style: solid;
     opacity: 0.7;
 }
-
 .hidden {
     display: none !important;
 }
-
-
-
-
-
 .share-button.icon-only {
     background-color: transparent;
     color: var(--accent-gold);
-    border: 1px black;
     padding: 0.8rem;
     width: 56px;
     height: 56px;
@@ -332,32 +282,18 @@ footer a:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-shadow: none;
 }
-
-.share-button.icon-only svg {
-    margin-left: 0;
-}
-
-
-
 .share-button:active {
     background-color: rgba(180, 83, 9, 0.1);
 }
-
 .share-button.loading {
     opacity: 0.5;
     cursor: wait;
 }
-
 @media (max-width: 768px) {
     .container {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-        padding-top: 1rem;
-        padding-bottom: 5rem;
+        padding: 1rem 1.5rem 5rem 1.5rem;
     }
-
     .verse-block,
     #reader-content {
         width: 88% !important;
@@ -365,45 +301,36 @@ footer a:hover {
         margin-right: auto;
         max-width: 100%;
     }
-
     #sanskrit-text,
     .verse-block p {
         overflow-wrap: break-word;
         word-wrap: break-word;
         hyphens: auto;
     }
-
     #sanskrit-text {
         font-size: 2.2rem;
         margin-top: 5rem;
     }
-
     #reader-content h2 {
         font-size: 2.5rem;
     }
-
     .verse-block p:first-of-type {
         font-size: 2.2rem;
     }
-
     footer {
         padding-bottom: 2rem;
         font-size: 0.85rem;
     }
-
     nav {
         justify-content: center;
         gap: 1.5rem;
         flex-direction: column;
         padding: 1.5rem 1rem;
     }
-
     .logo {
         margin-bottom: 0.5rem;
     }
 }
-
-/* Stable wrapper for the screenshot */
 #shareable-card-wrapper {
     background-color: var(--bg-color);
     padding: 3rem 2rem;
@@ -411,8 +338,6 @@ footer a:hover {
     border: 20px solid transparent;
     width: 100%;
 }
-
-/* Hidden on site, visible in image */
 .card-footer {
     font-family: var(--font-logo);
     color: var(--accent-gold);
@@ -421,21 +346,6 @@ footer a:hover {
     opacity: 0.7;
     display: none;
 }
-
-/* Transparent Circle Button */
-.share-button.icon-only {
-    background-color: transparent;
-    color: var(--accent-gold);
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
-}
-
 .share-button.icon-only:hover {
     background-color: rgba(180, 83, 9, 0.05);
 }
