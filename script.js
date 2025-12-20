@@ -456,7 +456,7 @@ const contactForm = document.getElementById('contact-form');
 const formStatus = document.getElementById('form-status');
 const submitBtn = document.getElementById('btn-submit-form');
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO45oIrllX7zQQ_KaZmpURRJTBv-JShj0vggQ_0GezeMTpslD3Ltg3G5d6my0-abr-ow/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDNyD0Ke_-4HfDFp1YwLRi-UC08hMT5fKbYNA4IfunGQqVE18ildLINWfF4JULNSVeIA/exec";
 
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
