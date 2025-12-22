@@ -183,7 +183,6 @@ nav {
     display: inline-block;
 }
 
-/* --- FIXED SANSKRIT CSS --- */
 #sanskrit-text {
     font-family: var(--font-sanskrit-heading);
     font-size: 2.8rem;
@@ -192,16 +191,15 @@ nav {
     font-weight: 400;
     max-width: 800px;
     margin: 2rem auto;
-    white-space: pre-wrap; 
+    white-space: pre-wrap;
     text-align: center;
-    word-wrap: break-word; 
+    word-wrap: break-word;
     padding: 0 10px;
 }
 
 #translation-text,
 .chapter-translation {
     font-family: var(--font-english);
-    /* font-size, height: handled by JS */
     color: var(--text-secondary);
     line-height: 1.8;
     max-width: 700px;
@@ -209,14 +207,9 @@ nav {
     font-style: italic;
     white-space: pre-line;
     text-align: center;
-
     cursor: pointer;
     user-select: none;
-    
-    /* Layout properties managed by JS for box filling */
     padding: 5px 0 10px 0;
-
-    /* SLOW ANIMATION RESTORED (0.6s) */
     opacity: 1;
     filter: blur(0px);
     transform: scale(1);
@@ -236,14 +229,12 @@ nav {
     width: 100%;
 }
 
-/* UPDATED: REMOVED BOX-SHADOW */
 .chapter-card {
     background: var(--card-bg);
     padding: 2rem;
     border-radius: 16px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    /* box-shadow: var(--shadow-soft); <--- REMOVED */
     box-shadow: none;
     text-align: center;
     border: 1px solid rgba(0, 0, 0, 0.03);
@@ -253,10 +244,8 @@ nav {
     justify-content: center;
 }
 
-/* UPDATED: REMOVED HOVER SHADOW */
 .chapter-card:hover {
     transform: translateY(-8px);
-    /* box-shadow: var(--shadow-hover); <--- REMOVED */
     box-shadow: none;
     border-color: var(--accent-light);
 }
@@ -290,7 +279,6 @@ nav {
     font-size: 2rem;
     font-weight: 300;
     cursor: pointer;
-    transition: all 0.2s ease;
     padding: 0;
     margin-bottom: 1rem;
     line-height: 1;
@@ -461,24 +449,15 @@ footer a:hover {
     filter: drop-shadow(0 0 3px var(--accent-gold));
 }
 
-/* --- UPDATED READER HEADER CSS (FULL WIDTH) --- */
-
 .reader-header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 100;
-
-    /* Added horizontal padding for spacing from screen edges */
-    padding: 1rem 2rem; 
-    
+    padding: 1rem 2rem;
     margin: 0 auto 2rem auto;
-
     width: 100%;
-    
-    /* Changed to 100% to fill screen */
-    max-width: 100%; 
-
+    max-width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -544,8 +523,7 @@ footer a:hover {
 
 .reader-header .back-link {
     position: absolute;
-    /* Adjusted left position to align with new padding */
-    left: 2rem; 
+    left: 2rem;
     top: 50%;
     transform: translateY(-50%);
     margin: 0;
@@ -555,25 +533,29 @@ footer a:hover {
     line-height: 1;
 }
 
-/* --- SCROLL TO TOP ARROW SPECIFIC CSS --- */
+#btn-reader-back {
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+}
+
+.reader-header.stuck #btn-reader-back {
+    transform: translateY(-50%) rotate(90deg);
+}
+
 #btn-chapters-back {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
 }
 
-/* Updated to 0.5 to match the back-link style */
 .reader-header.stuck #btn-chapters-back {
-    opacity: 0.5; 
+    opacity: 0.5;
     pointer-events: auto;
 }
 
-/* Ensure hover goes to 100% */
 .reader-header.stuck #btn-chapters-back:hover {
     opacity: 1;
 }
-
-/* MEDIA QUERIES */
 
 @media (max-width: 768px) {
     .container {
@@ -588,16 +570,15 @@ footer a:hover {
         max-width: 100%;
     }
 
-    /* Update Header for mobile */
     .reader-header {
-        padding: 1rem 1rem; /* Smaller padding on mobile */
+        padding: 1rem 1rem;
         margin: 0 auto 2rem auto;
         width: 100% !important;
         max-width: 100%;
     }
 
     .reader-header .back-link {
-        left: 1rem; /* Align left with padding */
+        left: 1rem;
     }
 
     .reader-header-title {
