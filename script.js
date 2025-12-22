@@ -346,13 +346,10 @@ function openChapter(chapterNum) {
             <div class="reader-header-text">
                 <span class="reader-header-sub">Chapter ${chapterNum}</span>
                 <span class="reader-header-title">${sanskritName}</span>
-            </div>
-        </div>
-        
-        <div style="text-align:center; margin-bottom: 3rem;">
-            <p style="color: #666; font-family: var(--font-english); font-style:italic;">
+                <p style="color: #666; font-family: var(--font-english); font-style:italic;">
                 ${englishMeaning}
             </p>
+            </div>
         </div>
     `;
 
