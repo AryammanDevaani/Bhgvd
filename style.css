@@ -491,12 +491,13 @@ footer a:hover {
 .reader-header::before {
     content: "";
     position: absolute;
-    top: -100px;           /* Starts way above the viewport */
-    height: calc(100% + 100px);
-    top: 0;
+    
+    /* RESET TO NORMAL: */
+    top: 0;           
+    height: 100%;
+    
     left: 0;
     width: 100%;
-    height: 100%;
     z-index: -1;
 
     background-color: var(--bg-color);
@@ -507,12 +508,20 @@ footer a:hover {
         border-bottom-color 0.4s ease,
         box-shadow 0.4s ease,
         backdrop-filter 0.4s ease,
-        -webkit-backdrop-filter 0.4s ease;
+        -webkit-backdrop-filter 0.4s ease,
+        top 0.4s ease,    /* Add transition for top */
+        height 0.4s ease; /* Add transition for height */
 }
 
 .reader-header.stuck::before {
-    background-color: var(--bg-color);
+    background-color: rgba(249, 247, 242, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(180, 83, 9, 0.15);
+    
+    /* ADD THE EXTENSION HERE: */
+    top: -100px;
+    height: calc(100% + 100px);
 }
 
 .reader-header.stuck {
