@@ -70,13 +70,7 @@
     --shadow-hover: 0 20px 50px -10px rgba(0, 0, 0, 0.12);
 }
 
-/* FIXED: Prevent horizontal scroll shift */
-html, body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden; 
-    margin: 0;
-    padding: 0;
+html {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -99,7 +93,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    position: relative;
+    overflow-x: hidden;
 }
 
 nav {
@@ -199,7 +193,6 @@ nav {
     white-space: pre-line;
 }
 
-/* --- MIST ANIMATION STYLES --- */
 #translation-text,
 .chapter-translation {
     font-family: var(--font-english);
@@ -210,14 +203,12 @@ nav {
     margin: 0 auto;
     font-style: italic;
     white-space: pre-line;
-    
-    /* Animation Props */
+
     opacity: 1;
-    filter: blur(0px); /* Start clear */
+    filter: blur(0px);
     transform: scale(1);
-    
-    /* Transition Timing */
-    transition: 
+
+    transition:
         height 0.2s ease-out,
         opacity 0.4s ease 0.1s,
         filter 0.4s ease 0.1s,
@@ -225,15 +216,13 @@ nav {
 
     cursor: pointer;
     user-select: none;
-    display: block;    
+    display: block;
     overflow: hidden;
     will-change: height, opacity, filter;
-    
-    /* Padding to stop cut-off */
-    padding: 5px 0 10px 0; 
+
+    padding: 5px 0 10px 0;
 }
 
-/* Mist Fade Out State */
 .fading-out {
     opacity: 0 !important;
     filter: blur(8px) !important;
@@ -393,10 +382,9 @@ footer a:hover {
     background-color: rgba(180, 83, 9, 0.05);
 }
 
-/* FIXED PADDING FOR SHARE CARD */
 #shareable-card-wrapper {
     background-color: var(--bg-color);
-    padding: 3rem 2rem 0rem 2rem; /* Bottom 0 to fix gap */
+    padding: 3rem 2rem 0rem 2rem;
     border-radius: 0px;
     border: 2px solid transparent;
     width: 100%;
@@ -432,13 +420,12 @@ footer a:hover {
     box-shadow: 0 15px 30px -5px rgba(180, 83, 9, 0.4);
 }
 
-/* FIXED: Overlay width to prevent horizontal scroll */
 .war-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Changed from 100vw */
-    height: 100%;
+    right: 0;
+    bottom: 0;
     background-color: var(--bg-color);
     z-index: 9999;
     overflow: hidden;
@@ -479,7 +466,8 @@ footer a:hover {
     filter: drop-shadow(0 0 3px var(--accent-gold));
 }
 
-/* STICKY HEADER STATES (WITH NOTCH FIX) */
+/* UPDATED READER HEADER CSS STARTS HERE */
+
 .reader-header {
     position: -webkit-sticky;
     position: sticky;
@@ -487,8 +475,10 @@ footer a:hover {
     z-index: 100;
 
     padding: 1rem 0;
+    /* Centered with auto margins, matching verse block vertical spacing */
     margin: 0 auto 2rem auto; 
     
+    /* Strict width controls matching verse-block */
     width: 100%;
     max-width: 750px; 
     
@@ -498,14 +488,11 @@ footer a:hover {
     overflow: visible;
 }
 
-/* FIXED: ::before now extends upwards to cover notch */
 .reader-header::before {
     content: "";
     position: absolute;
-    
-    top: -100px;           /* Starts way above viewport */
-    height: calc(100% + 100px); /* Covers the extra space */
-    
+    top: -100px;           /* Starts way above the viewport */
+    height: calc(100% + 100px);
     left: 0;
     width: 100%;
     z-index: -1;
@@ -522,9 +509,7 @@ footer a:hover {
 }
 
 .reader-header.stuck::before {
-    background-color: rgba(249, 247, 242, 0.85); /* Slightly transparent */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background-color: var(--bg-color);
     border-bottom: 1px solid rgba(180, 83, 9, 0.15);
 }
 
@@ -560,6 +545,7 @@ footer a:hover {
 
 .reader-header .back-link {
     position: absolute;
+    /* Moved slightly left to align visually within the column */
     left: 0; 
     top: 50%;
     transform: translateY(-50%);
@@ -570,7 +556,7 @@ footer a:hover {
     line-height: 1;
 }
 
-/* MEDIA QUERIES */
+/* UPDATED MEDIA QUERIES */
 
 @media (max-width: 768px) {
     .container {
@@ -585,13 +571,15 @@ footer a:hover {
         max-width: 100%;
     }
 
+    /* Update Header to match mobile verse width */
     .reader-header {
         padding: 1rem 0;
         margin: 0 auto 2rem auto;
-        width: 88% !important; 
+        width: 88% !important; /* Matches verse-block mobile width */
         max-width: 100%;
     }
 
+    /* Reset back link position for mobile if needed */
     .reader-header .back-link {
         left: 0; 
     }
