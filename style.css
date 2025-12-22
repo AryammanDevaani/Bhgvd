@@ -203,12 +203,12 @@ nav {
     margin: 0 auto;
     font-style: italic;
     white-space: pre-line;
-    
+
     opacity: 1;
     filter: blur(0px);
     transform: scale(1);
-    
-    transition: 
+
+    transition:
         height 0.2s ease-out,
         opacity 0.4s ease 0.1s,
         filter 0.4s ease 0.1s,
@@ -216,11 +216,11 @@ nav {
 
     cursor: pointer;
     user-select: none;
-    display: block;    
+    display: block;
     overflow: hidden;
     will-change: height, opacity, filter;
-    
-    padding: 5px 0 10px 0; 
+
+    padding: 5px 0 10px 0;
 }
 
 .fading-out {
@@ -529,16 +529,16 @@ footer a:hover {
     align-items: center;
     justify-content: center;
 
-    overflow: visible; 
+    overflow: visible;
 }
 
 .reader-header::before {
     content: "";
     position: absolute;
     top: 0;
-    left: 50%; 
+    left: 50%;
     transform: translateX(-50%);
-    
+
     width: 100vw;
     height: 100%;
     z-index: -1;
@@ -546,20 +546,16 @@ footer a:hover {
     background-color: var(--bg-color);
     border-bottom: 1px solid transparent;
 
-    transition: 
-        background-color 0.4s ease, 
-        border-bottom-color 0.4s ease, 
+    transition:
+        background-color 0.4s ease,
+        border-bottom-color 0.4s ease,
         box-shadow 0.4s ease,
         backdrop-filter 0.4s ease,
         -webkit-backdrop-filter 0.4s ease;
 }
 
 .reader-header.stuck::before {
-    background-color: rgba(249, 247, 242, 0.9);
-    
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    
+    background-color: var(--bg-color);
     border-bottom: 1px solid rgba(180, 83, 9, 0.15);
     box-shadow: 0 4px 30px -5px rgba(0, 0, 0, 0.06);
 }
@@ -614,9 +610,9 @@ footer a:hover {
     }
 
     .reader-header .back-link {
-        left: 1rem; 
+        left: 1rem;
     }
-    
+
     .reader-header-title {
         font-size: 1.3rem;
     }
