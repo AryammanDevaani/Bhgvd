@@ -491,6 +491,8 @@ footer a:hover {
 .reader-header::before {
     content: "";
     position: absolute;
+    top: -100px;           /* Starts way above the viewport */
+    height: calc(100% + 100px);
     top: 0;
     left: 0;
     width: 100%;
