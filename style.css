@@ -155,7 +155,8 @@ nav {
     min-height: 60vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-top: 5vh;
 }
 
 #verse-content {
@@ -189,7 +190,7 @@ nav {
     color: var(--text-primary);
     font-weight: 400;
     max-width: 800px;
-    margin: 6rem auto 2rem auto;
+    margin: 2rem auto;
     white-space: pre-line;
 }
 
@@ -476,12 +477,12 @@ footer a:hover {
 
     padding: 1rem 0;
     /* Centered with auto margins, matching verse block vertical spacing */
-    margin: 0 auto 2rem auto; 
-    
+    margin: 0 auto 2rem auto;
+
     /* Strict width controls matching verse-block */
     width: 100%;
-    max-width: 750px; 
-    
+    max-width: 900px;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -491,11 +492,11 @@ footer a:hover {
 .reader-header::before {
     content: "";
     position: absolute;
-    
+
     /* RESET TO NORMAL: */
-    top: 0;           
+    top: 0;
     height: 100%;
-    
+
     left: 0;
     width: 100%;
     z-index: -1;
@@ -509,16 +510,16 @@ footer a:hover {
         box-shadow 0.4s ease,
         backdrop-filter 0.4s ease,
         -webkit-backdrop-filter 0.4s ease,
-        top 0.4s ease,    /* Add transition for top */
-        height 0.4s ease; /* Add transition for height */
+        top 0.4s ease,
+        /* Add transition for top */
+        height 0.4s ease;
+    /* Add transition for height */
 }
 
 .reader-header.stuck::before {
-    background-color: rgba(249, 247, 242, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background-color: var(--bg-color);
     border-bottom: 1px solid rgba(180, 83, 9, 0.15);
-    
+
     /* ADD THE EXTENSION HERE: */
     top: -100px;
     height: calc(100% + 100px);
@@ -557,7 +558,7 @@ footer a:hover {
 .reader-header .back-link {
     position: absolute;
     /* Moved slightly left to align visually within the column */
-    left: 0; 
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
     margin: 0;
@@ -586,13 +587,14 @@ footer a:hover {
     .reader-header {
         padding: 1rem 0;
         margin: 0 auto 2rem auto;
-        width: 88% !important; /* Matches verse-block mobile width */
+        width: 94% !important;
+        /* Matches verse-block mobile width */
         max-width: 100%;
     }
 
     /* Reset back link position for mobile if needed */
     .reader-header .back-link {
-        left: 0; 
+        left: 0;
     }
 
     .reader-header-title {
