@@ -420,56 +420,6 @@ footer a:hover {
     box-shadow: 0 15px 30px -5px rgba(180, 83, 9, 0.4);
 }
 
-@media (max-width: 768px) {
-    .container {
-        padding: 1rem 1.5rem 5rem 1.5rem;
-    }
-
-    .verse-block,
-    #reader-content {
-        width: 88% !important;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 100%;
-    }
-
-    #sanskrit-text,
-    .verse-block p {
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        hyphens: auto;
-    }
-
-    #sanskrit-text {
-        font-size: 2.2rem;
-        margin-top: 5rem;
-    }
-
-    #reader-content h2 {
-        font-size: 2.5rem;
-    }
-
-    .verse-block p:first-of-type {
-        font-size: 2.2rem;
-    }
-
-    footer {
-        padding-bottom: 2rem;
-        font-size: 0.85rem;
-    }
-
-    nav {
-        justify-content: center;
-        gap: 1.5rem;
-        flex-direction: column;
-        padding: 1.5rem 1rem;
-    }
-
-    .logo {
-        margin-bottom: 0.5rem;
-    }
-}
-
 .war-overlay {
     position: fixed;
     top: 0;
@@ -516,19 +466,25 @@ footer a:hover {
     filter: drop-shadow(0 0 3px var(--accent-gold));
 }
 
+/* UPDATED READER HEADER CSS STARTS HERE */
+
 .reader-header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 100;
 
-    padding: 1rem;
-    margin: 0 -1.5rem 2rem -1.5rem;
-    width: calc(100% + 3rem);
+    padding: 1rem 0;
+    /* Centered with auto margins, matching verse block vertical spacing */
+    margin: 0 auto 2rem auto; 
+    
+    /* Strict width controls matching verse-block */
+    width: 100%;
+    max-width: 750px; 
+    
     display: flex;
     align-items: center;
     justify-content: center;
-
     overflow: visible;
 }
 
@@ -589,7 +545,8 @@ footer a:hover {
 
 .reader-header .back-link {
     position: absolute;
-    left: 1rem;
+    /* Moved slightly left to align visually within the column */
+    left: 0; 
     top: 50%;
     transform: translateY(-50%);
     margin: 0;
@@ -599,18 +556,71 @@ footer a:hover {
     line-height: 1;
 }
 
+/* UPDATED MEDIA QUERIES */
+
 @media (max-width: 768px) {
-    .reader-header {
-        padding: 1rem;
-        margin: 0 -1.5rem 2rem -1.5rem;
-        width: calc(100% + 3rem);
+    .container {
+        padding: 1rem 1.5rem 5rem 1.5rem;
     }
 
+    .verse-block,
+    #reader-content {
+        width: 88% !important;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+    }
+
+    /* Update Header to match mobile verse width */
+    .reader-header {
+        padding: 1rem 0;
+        margin: 0 auto 2rem auto;
+        width: 88% !important; /* Matches verse-block mobile width */
+        max-width: 100%;
+    }
+
+    /* Reset back link position for mobile if needed */
     .reader-header .back-link {
-        left: 1rem;
+        left: 0; 
     }
 
     .reader-header-title {
         font-size: 1.3rem;
+    }
+
+    #sanskrit-text,
+    .verse-block p {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        hyphens: auto;
+    }
+
+    #sanskrit-text {
+        font-size: 2.2rem;
+        margin-top: 5rem;
+    }
+
+    #reader-content h2 {
+        font-size: 2.5rem;
+    }
+
+    .verse-block p:first-of-type {
+        font-size: 2.2rem;
+    }
+
+    footer {
+        padding-bottom: 2rem;
+        font-size: 0.85rem;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 1.5rem;
+        flex-direction: column;
+        padding: 1.5rem 1rem;
+    }
+
+    .logo {
+        margin-bottom: 0.5rem;
     }
 }
