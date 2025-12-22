@@ -555,7 +555,6 @@ footer a:hover {
 .reader-header.stuck::before {
     background-color: var(--bg-color);
     border-bottom: 1px solid rgba(180, 83, 9, 0.15);
-    box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.06);
 }
 
 .reader-header.stuck {
