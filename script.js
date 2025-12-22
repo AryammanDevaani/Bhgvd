@@ -82,9 +82,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 function startWarLoop() {
     const loader = document.getElementById('war-loader');
     const content = document.getElementById('verse-content');
-    const loadingText = document.getElementById('loading');
-
-    if (loadingText) loadingText.classList.add('hidden');
+    
     if (content) content.classList.add('hidden');
     if (loader) {
         loader.classList.remove('hidden');
@@ -113,6 +111,60 @@ function startWarLoop() {
     warInterval = setInterval(fireVolley, 2200);
 }
 
+/* --- THE "FILL BOX" LOGIC --- */
+function calculateBoxMetrics(targetElement, translations) {
+    const ghost = targetElement.cloneNode(true);
+    ghost.style.position = 'absolute';
+    ghost.style.top = '-9999px';
+    ghost.style.left = '-9999px';
+    ghost.style.visibility = 'hidden';
+    ghost.style.height = 'auto'; 
+    ghost.style.width = targetElement.offsetWidth + 'px'; 
+    ghost.style.padding = window.getComputedStyle(targetElement).padding;
+    ghost.style.fontSize = '1.4rem'; 
+    ghost.classList.remove('hidden');
+    
+    document.body.appendChild(ghost);
+
+    const baseSize = 1.4; // rem
+    const maxSize = 2.4; // max rem
+    
+    ghost.textContent = translations.english;
+    const hEng = ghost.offsetHeight;
+
+    ghost.textContent = translations.hindi;
+    const hHin = ghost.offsetHeight;
+
+    ghost.textContent = translations.gujarati;
+    const hGuj = ghost.offsetHeight;
+
+    const maxHeight = Math.max(hEng, hHin, hGuj);
+
+    function getOptimalSize(height) {
+        if (height >= maxHeight) return baseSize + 'rem';
+        let ratio = maxHeight / height;
+        let newSize = baseSize * Math.sqrt(ratio); 
+        if (newSize > maxSize) newSize = maxSize;
+        return newSize.toFixed(2) + 'rem';
+    }
+
+    const fsEng = getOptimalSize(hEng);
+    const fsHin = getOptimalSize(hHin);
+    const fsGuj = getOptimalSize(hGuj);
+
+    document.body.removeChild(ghost);
+
+    return {
+        height: maxHeight + 'px',
+        fs: {
+            english: fsEng,
+            hindi: fsHin,
+            gujarati: fsGuj
+        }
+    };
+}
+
+
 function revealSuccess() {
     const loader = document.getElementById('war-loader');
     const content = document.getElementById('verse-content');
@@ -131,17 +183,30 @@ function revealSuccess() {
         currentVerseObj = verse;
 
         document.getElementById('sanskrit-text').textContent = verse.sanskrit;
-        
         const textElem = document.getElementById('translation-text');
-        textElem.textContent = verse.english; 
-        textElem.style.height = 'auto';
-        textElem.dataset.lang = "english";
-        textElem.classList.remove('fading-out');
         
         document.getElementById('verse-reference').textContent = `Chapter ${verse.chapter} • Verse ${verse.verse}`;
 
         if (content) {
             content.classList.remove('hidden');
+            
+            const metrics = calculateBoxMetrics(textElem, verse);
+            
+            textElem.style.height = metrics.height;
+            textElem.style.display = 'flex';
+            textElem.style.alignItems = 'center';
+            textElem.style.justifyContent = 'center';
+
+            textElem.dataset.fsEng = metrics.fs.english;
+            textElem.dataset.fsHin = metrics.fs.hindi;
+            textElem.dataset.fsGuj = metrics.fs.gujarati;
+
+            textElem.textContent = verse.english; 
+            textElem.style.fontSize = metrics.fs.english;
+            textElem.dataset.lang = "english";
+            
+            textElem.classList.remove('fading-out');
+
             content.animate([
                 { opacity: 0, transform: 'translateY(20px)' },
                 { opacity: 1, transform: 'translateY(0)' }
@@ -359,7 +424,7 @@ function openChapter(chapterNum) {
         
         div.innerHTML = `
             <span class="verse-pill" style="margin-bottom: 1.5rem;">Verse ${v.verse}</span>
-            <p>${v.sanskrit}</p>
+            <p class="sanskrit-verse-line">${v.sanskrit}</p>
             <p class="chapter-translation"
                onclick="handleChapterClick(this)"
                data-lang="english"
@@ -373,6 +438,29 @@ function openChapter(chapterNum) {
     });
 
     switchView('reader');
+    
+    // PROCESS METRICS
+    const verseBlocks = document.querySelectorAll('.verse-block .chapter-translation');
+    verseBlocks.forEach(el => {
+        const data = {
+            english: el.dataset.english,
+            hindi: el.dataset.hindi,
+            gujarati: el.dataset.gujarati
+        };
+        const metrics = calculateBoxMetrics(el, data);
+        el.style.height = metrics.height;
+        el.style.display = 'flex';
+        el.style.alignItems = 'center';
+        el.style.justifyContent = 'center';
+        
+        el.dataset.fsEng = metrics.fs.english;
+        el.dataset.fsHin = metrics.fs.hindi;
+        el.dataset.fsGuj = metrics.fs.gujarati;
+        
+        el.style.fontSize = metrics.fs.english;
+        
+        el.classList.remove('fading-out');
+    });
 
     const header = document.getElementById('sticky-header');
     const sentinel = document.getElementById('sentinel');
@@ -406,6 +494,7 @@ if (btnShare) {
                     const footer = clonedDoc.querySelector('.card-footer');
                     const ref = clonedDoc.getElementById('verse-reference');
                     const wrapper = clonedDoc.getElementById('shareable-card-wrapper');
+                    const text = clonedDoc.getElementById('translation-text');
 
                     if (footer) {
                         footer.style.display = 'block';
@@ -419,8 +508,11 @@ if (btnShare) {
                         wrapper.style.margin = "0 auto";
                         wrapper.style.border = "0px solid #B45309";
                         wrapper.style.borderRadius = "20px";
-                        
                         wrapper.style.paddingBottom = "3rem"; 
+                    }
+                    if(text) {
+                         text.style.height = 'auto';
+                         text.style.display = 'block';
                     }
                 }
             });
@@ -527,7 +619,7 @@ const homeTextElem = document.getElementById('translation-text');
 if (homeTextElem) {
     homeTextElem.addEventListener('click', () => {
         if (!currentVerseObj) return;
-        animateTextChange(homeTextElem, currentVerseObj);
+        switchLanguage(homeTextElem, currentVerseObj);
     });
 }
 
@@ -537,46 +629,40 @@ window.handleChapterClick = function(el) {
         hindi: el.dataset.hindi,
         gujarati: el.dataset.gujarati
     };
-    animateTextChange(el, verseData);
+    switchLanguage(el, verseData);
 };
 
-function animateTextChange(element, dataObj) {
-    const startHeight = element.offsetHeight;
-    element.style.height = startHeight + 'px';
-
+/* --- ANIMATED LANGUAGE SWITCH (SLOW BLUR) --- */
+function switchLanguage(element, dataObj) {
+    // 1. Start Fade Out
     element.classList.add('fading-out');
 
+    // 2. Wait for animation (600ms to match CSS)
     setTimeout(() => {
         const currentLang = element.dataset.lang || "english";
-        let nextLang, nextText;
+        let nextLang, nextText, nextFs;
 
         if (currentLang === "english") {
             nextLang = "hindi";
             nextText = dataObj.hindi;
+            nextFs = element.dataset.fsHin;
         } else if (currentLang === "hindi") {
             nextLang = "gujarati";
             nextText = dataObj.gujarati;
+            nextFs = element.dataset.fsGuj;
         } else {
             nextLang = "english";
             nextText = dataObj.english;
+            nextFs = element.dataset.fsEng;
         }
 
+        // 3. Swap Text & Font Size
         element.textContent = nextText;
         element.dataset.lang = nextLang;
+        element.style.fontSize = nextFs;
 
-        element.style.height = 'auto'; 
-        const targetHeight = element.offsetHeight;
-        
-        element.style.height = startHeight + 'px'; 
-        
-        void element.offsetHeight; 
-
-        element.style.height = targetHeight + 'px';
+        // 4. Start Fade In
         element.classList.remove('fading-out');
 
-        setTimeout(() => {
-            element.style.height = 'auto';
-        }, 400); // Matches CSS
-
-    }, 200); // Matches CSS
+    }, 600); // Matches 0.6s CSS transition
 }

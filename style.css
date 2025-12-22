@@ -183,52 +183,51 @@ nav {
     display: inline-block;
 }
 
+/* --- FIXED SANSKRIT CSS --- */
 #sanskrit-text {
     font-family: var(--font-sanskrit-heading);
-    font-size: 3rem;
+    font-size: 2.8rem;
     line-height: 1.5;
     color: var(--text-primary);
     font-weight: 400;
     max-width: 800px;
     margin: 2rem auto;
-    white-space: pre-line;
+    white-space: pre-wrap; 
+    text-align: center;
+    word-wrap: break-word; 
+    padding: 0 10px;
 }
 
 #translation-text,
 .chapter-translation {
     font-family: var(--font-english);
-    font-size: 1.4rem;
+    /* font-size, height: handled by JS */
     color: var(--text-secondary);
     line-height: 1.8;
     max-width: 700px;
     margin: 0 auto;
     font-style: italic;
     white-space: pre-line;
-
-    opacity: 1;
-    filter: blur(0px);
-    transform: scale(1);
-
-    transition:
-        height 0.2s ease-out,
-        opacity 0.4s ease 0.1s,
-        filter 0.4s ease 0.1s,
-        transform 0.4s ease 0.1s;
+    text-align: center;
 
     cursor: pointer;
     user-select: none;
-    display: block;
-    overflow: hidden;
-    will-change: height, opacity, filter;
-
+    
+    /* Layout properties managed by JS for box filling */
     padding: 5px 0 10px 0;
+
+    /* SLOW ANIMATION RESTORED */
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+    /* Changed 0.2s -> 0.6s */
+    transition: opacity 0.6s ease, filter 0.6s ease, transform 0.6s ease;
 }
 
 .fading-out {
     opacity: 0 !important;
     filter: blur(8px) !important;
     transform: scale(0.98);
-    transition: opacity 0.2s ease, filter 0.2s ease, transform 0.2s ease !important;
 }
 
 .grid {
@@ -309,23 +308,15 @@ nav {
     margin: 0 auto;
 }
 
-.verse-block p:first-of-type {
+.sanskrit-verse-line {
     font-family: var(--font-sanskrit-heading);
     font-size: 3rem;
     font-weight: 400;
     line-height: 1.5;
     margin-bottom: 2rem;
     color: var(--text-primary);
-    white-space: pre-line;
-}
-
-.verse-block p:last-of-type {
-    font-family: var(--font-english);
-    font-size: 1.4rem;
-    line-height: 1.8;
-    color: var(--text-secondary);
-    font-style: italic;
-    white-space: pre-line;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 footer {
@@ -467,7 +458,7 @@ footer a:hover {
     filter: drop-shadow(0 0 3px var(--accent-gold));
 }
 
-/* UPDATED READER HEADER CSS STARTS HERE */
+/* READER HEADER CSS */
 
 .reader-header {
     position: -webkit-sticky;
@@ -476,10 +467,8 @@ footer a:hover {
     z-index: 100;
 
     padding: 1rem 0;
-    /* Centered with auto margins, matching verse block vertical spacing */
     margin: 0 auto 2rem auto;
 
-    /* Strict width controls matching verse-block */
     width: 100%;
     max-width: 900px;
 
@@ -492,18 +481,13 @@ footer a:hover {
 .reader-header::before {
     content: "";
     position: absolute;
-
-    /* RESET TO NORMAL: */
     top: 0;
     height: 100%;
-
     left: 0;
     width: 100%;
     z-index: -1;
-
     background-color: var(--bg-color);
     border-bottom: 1px solid transparent;
-
     transition:
         background-color 0.4s ease,
         border-bottom-color 0.4s ease,
@@ -511,16 +495,12 @@ footer a:hover {
         backdrop-filter 0.4s ease,
         -webkit-backdrop-filter 0.4s ease,
         top 0.4s ease,
-        /* Add transition for top */
         height 0.4s ease;
-    /* Add transition for height */
 }
 
 .reader-header.stuck::before {
     background-color: var(--bg-color);
     border-bottom: 1px solid rgba(180, 83, 9, 0.15);
-
-    /* ADD THE EXTENSION HERE: */
     top: -100px;
     height: calc(100% + 100px);
 }
@@ -557,7 +537,6 @@ footer a:hover {
 
 .reader-header .back-link {
     position: absolute;
-    /* Moved slightly left to align visually within the column */
     left: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -568,7 +547,7 @@ footer a:hover {
     line-height: 1;
 }
 
-/* UPDATED MEDIA QUERIES */
+/* MEDIA QUERIES */
 
 @media (max-width: 768px) {
     .container {
@@ -583,16 +562,13 @@ footer a:hover {
         max-width: 100%;
     }
 
-    /* Update Header to match mobile verse width */
     .reader-header {
         padding: 1rem 0;
         margin: 0 auto 2rem auto;
         width: 94% !important;
-        /* Matches verse-block mobile width */
         max-width: 100%;
     }
 
-    /* Reset back link position for mobile if needed */
     .reader-header .back-link {
         left: 0;
     }
@@ -617,7 +593,7 @@ footer a:hover {
         font-size: 2.5rem;
     }
 
-    .verse-block p:first-of-type {
+    .sanskrit-verse-line {
         font-size: 2.2rem;
     }
 
