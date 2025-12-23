@@ -791,7 +791,7 @@ function switchLanguage(element, dataObj) {
     }, 600); 
 }
 
-function smoothScrollTop(duration = 1000) {
+function smoothScrollTop(duration = 5000) {
     const start = window.scrollY;
     const startTime = performance.now();
 
