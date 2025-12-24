@@ -518,12 +518,21 @@ function openChapter(chapterNum, highlightVerse = null) {
     });
 
     if (highlightVerse) {
-        requestAnimationFrame(() => {
+        // Changed to setTimeout with 100ms delay to allow mobile layout to settle
+        setTimeout(() => {
             const targetEl = document.getElementById(`verse-${highlightVerse}`);
             if (targetEl) {
-                targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const header = document.querySelector('.reader-header');
+                const headerHeight = header ? header.offsetHeight : 0;
+                
+                // Calculate absolute position to scroll to
+                const elementPosition = targetEl.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - headerHeight;
+
+                // Increased duration to 3000ms for a very smooth glide
+                smoothScrollTo(offsetPosition, 3000);
             }
-        });
+        }, 100);
     }
 
     const header = document.getElementById('sticky-header');
@@ -808,5 +817,26 @@ function smoothScrollTop(duration = 5000) {
         }
     }
 
+    requestAnimationFrame(animation);
+}
+
+function smoothScrollTo(target, duration) {
+    const start = window.scrollY;
+    const change = target - start;
+    const startTime = performance.now();
+
+    function animation(currentTime) {
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+
+        // Ease-out Quintic (power of 5) for ultra-smooth deceleration
+        const ease = 1 - Math.pow(1 - progress, 5);
+
+        window.scrollTo(0, start + (change * ease));
+
+        if (timeElapsed < duration) {
+            requestAnimationFrame(animation);
+        }
+    }
     requestAnimationFrame(animation);
 }
