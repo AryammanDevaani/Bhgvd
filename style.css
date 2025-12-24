@@ -484,16 +484,12 @@ footer a:hover {
     filter: drop-shadow(0 0 3px var(--accent-gold));
 }
 
-/* --- UPDATED STICKY HEADER LOGIC --- */
 .reader-header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 100;
-    
-    /* Default padding */
     padding: 1rem 2rem;
-    
     margin: 0 auto 2rem auto;
     width: 100%;
     max-width: 100%;
@@ -501,38 +497,39 @@ footer a:hover {
     align-items: center;
     justify-content: center;
     overflow: visible;
-    
-    /* Smooth padding transition for the notch effect */
-    transition: padding-top 0.3s ease;
 }
 
-/* Background Layer for Header */
 .reader-header::before {
     content: "";
     position: absolute;
     top: 0;
+    height: 100%;
     left: 0;
     width: 100%;
-    height: 100%;
     z-index: -1;
-    
-    background-color: transparent;
+    background-color: var(--bg-color);
     border-bottom: 1px solid rgba(180, 83, 9, 0.15);
-}
-
-/* STUCK STATE */
-.reader-header.stuck {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    
-    /* Increase top padding by the safe area inset (notch height) */
-    padding-top: calc(1rem + env(safe-area-inset-top));
+    transition:
+        background-color 0.4s ease,
+        border-bottom-color 0.4s ease,
+        box-shadow 0.4s ease,
+        backdrop-filter 0.4s ease,
+        -webkit-backdrop-filter 0.4s ease,
+        top 0.4s ease,
+        height 0.4s ease;
 }
 
 .reader-header.stuck::before {
     background-color: var(--bg-color);
     border-bottom: 1px solid rgba(180, 83, 9, 0.15);
+    top: -100px;
+    height: calc(100% + 100px);
+}
+
+.reader-header.stuck {
+    background: transparent;
+    box-shadow: none;
+    border: none;
 }
 
 .reader-header-text {
@@ -615,10 +612,6 @@ footer a:hover {
         max-width: 100%;
     }
 
-    .reader-header.stuck {
-        padding-top: calc(1rem + env(safe-area-inset-top));
-    }
-
     .reader-header .back-link {
         left: 1rem;
     }
@@ -662,117 +655,4 @@ footer a:hover {
     .logo {
         margin-bottom: 0.5rem;
     }
-}
-
-/* Flash Overlay (Solid Background) */
-#flash-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    
-    /* Solid background color */
-    background-color: var(--bg-color); 
-    
-    z-index: 10000;
-    touch-action: none;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* End State (Hidden): Transparent & Blurred */
-    opacity: 0;
-    filter: blur(10px);
-    
-    /* Transition for Fade Out & Blur Effect on close (0.5s) */
-    transition: opacity 0.5s ease, filter 0.5s ease;
-}
-
-#flash-overlay.visible {
-    /* Visible State: Opaque & Sharp */
-    opacity: 1;
-    filter: blur(0px);
-    
-    /* Instant appearance when loading */
-    transition: none; 
-}
-
-/* Flash Card (Transparent & Centered) */
-#flash-card {
-    background-color: transparent; 
-    color: var(--accent-gold);
-    padding: 3rem 2rem;
-    border-radius: 16px;
-    box-shadow: none;
-    
-    max-width: 90%;
-    width: 400px;
-    
-    text-align: center;
-    position: relative;
-    cursor: pointer;
-    
-    transform: none;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#flash-text {
-    font-family: var(--font-english);
-    font-size: 1.5rem;
-    line-height: 1.6;
-    font-style: italic;
-    font-weight: 600;
-    white-space: pre-wrap;
-    
-    /* Explicit start state for blur interpolation */
-    filter: blur(0px);
-    
-    /* Smooth transition for text switching (fade/blur), duration 0.5s */
-    transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease;
-}
-
-/* Close Button */
-#btn-close-flash {
-    position: absolute;
-    top: -40px;
-    right: 50%;
-    transform: translateX(50%);
-    
-    background: rgba(180, 83, 9, 0.1);
-    border: none;
-    color: var(--accent-gold);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    font-size: 1.8rem;
-    cursor: pointer;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* Enhanced transition to include opacity */
-    transition: opacity 0.5s ease, transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-    
-    opacity: 1;
-    filter: blur(0px);
-}
-
-/* Specific fading state for the close button */
-#btn-close-flash.fading-out {
-    opacity: 0 !important;
-    filter: blur(4px);
-    transform: translateX(50%) scale(0.8); 
-}
-
-#btn-close-flash:hover {
-    background-color: var(--accent-gold);
-    color: #fff;
-    transform: translateX(50%) rotate(90deg);
 }

@@ -3,9 +3,7 @@ let currentVerseObj = null;
 let warInterval = null;
 let stopWarRequested = false;
 let chapterObserver = null;
-let chaptersObserver = null;
-// Flag to ensure flash only shows on the initial load
-let hasShownFlashInSession = false; 
+let chaptersObserver = null; 
 
 const MY_WEBSITE_URL = "bhgvd.com";
 const APP_TITLE = "Śrīmad Bhagavad Gītā";
@@ -215,12 +213,6 @@ function revealSuccess() {
                 { opacity: 0, transform: 'translateY(20px)' },
                 { opacity: 1, transform: 'translateY(0)' }
             ], { duration: 800, easing: 'ease-out', fill: 'forwards' });
-        }
-        
-        // Trigger Flash Message Logic Here
-        if (!hasShownFlashInSession) {
-            checkAndShowFlash();
-            hasShownFlashInSession = true;
         }
     }
 }
@@ -847,99 +839,4 @@ function smoothScrollTo(target, duration) {
         }
     }
     requestAnimationFrame(animation);
-}
-
-// Logic for Flash Overlay (Instructions)
-const flashOverlay = document.getElementById('flash-overlay');
-const flashCard = document.getElementById('flash-card');
-const flashText = document.getElementById('flash-text');
-const closeFlashBtn = document.getElementById('btn-close-flash');
-
-const flashMessages = {
-    english: "Tap on the Sanskrit Verse to know the purport.\n------------------\nTap on the English translation to switch the languages.",
-    hindi: "तात्पर्य जानने के लिए संस्कृत श्लोक पर tap करें।\n------------------\nभाषा बदलने के लिए अंग्रेजी अनुवाद पर tap करें।",
-    gujarati: "ભાવાર્થ જાણવા માટે સંસ્કૃત શ્લોક પર tap કરો.\n------------------\nભાષા બદલવા માટે અંગ્રેજી અનુવાદ પર tap કરો."
-};
-
-let currentFlashLang = 'english';
-
-function checkAndShowFlash() {
-    // Check local storage for view count
-    const seenCount = parseInt(localStorage.getItem('bhgvd_flash_count') || '0');
-    
-    // DEV MODE: Counter check is disabled for testing.
-    // TODO: REMINDER - Uncomment the check below for production to limit views to 2.
-     if (seenCount < 2) { 
-    //if (true) { // Forces the flash message to show every time
-        if (flashOverlay && flashText) {
-            flashText.textContent = flashMessages.english;
-            
-            // Start both text AND button in blurred state
-            flashText.classList.add('fading-out');
-            closeFlashBtn.classList.add('fading-out');
-
-            // Instant appearance (0ms delay) of overlay
-            setTimeout(() => {
-                flashOverlay.classList.remove('hidden');
-                
-                // Disable background scrolling
-                document.body.style.overflow = 'hidden';
-
-                // Force reflow
-                void flashOverlay.offsetWidth;
-                flashOverlay.classList.add('visible');
-                
-                // Increment view count
-                localStorage.setItem('bhgvd_flash_count', seenCount + 1);
-                
-                // Animate text AND button in (Blur -> Sharp) slightly after overlay appears
-                setTimeout(() => {
-                    flashText.classList.remove('fading-out');
-                    closeFlashBtn.classList.remove('fading-out');
-                }, 50); 
-                
-            }, 0);
-        }
-    }
-}
-
-if (flashCard) {
-    flashCard.addEventListener('click', (e) => {
-        if (e.target.closest('#btn-close-flash')) return;
-
-        // Apply instant blur class to TEXT ONLY
-        flashText.classList.add('fading-out');
-        
-        setTimeout(() => {
-            if (currentFlashLang === 'english') {
-                currentFlashLang = 'hindi';
-                flashText.textContent = flashMessages.hindi;
-            } else if (currentFlashLang === 'hindi') {
-                currentFlashLang = 'gujarati';
-                flashText.textContent = flashMessages.gujarati;
-            } else {
-                currentFlashLang = 'english';
-                flashText.textContent = flashMessages.english;
-            }
-            
-            // Remove class -> Animates back to clear
-            flashText.classList.remove('fading-out');
-        }, 500); 
-    });
-}
-
-if (closeFlashBtn) {
-    closeFlashBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); 
-        if (flashOverlay) {
-            flashOverlay.classList.remove('visible');
-            
-            // Re-enable scrolling
-            document.body.style.overflow = '';
-
-            setTimeout(() => {
-                flashOverlay.classList.add('hidden');
-            }, 500); 
-        }
-    });
 }
