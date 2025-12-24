@@ -869,8 +869,8 @@ function checkAndShowFlash() {
     
     // DEV MODE: Counter check is disabled for testing.
     // TODO: REMINDER - Uncomment the check below for production to limit views to 2.
-    // if (seenCount < 2) { 
-    if (true) { // Forces the flash message to show every time
+     if (seenCount < 2) { 
+    //if (true) { // Forces the flash message to show every time
         if (flashOverlay && flashText) {
             flashText.textContent = flashMessages.english;
             
