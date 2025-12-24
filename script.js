@@ -527,7 +527,7 @@ function openChapter(chapterNum, highlightVerse = null) {
                 
                 // Calculate absolute position to scroll to
                 const elementPosition = targetEl.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.scrollY - headerHeight;
+                const offsetPosition = elementPosition + window.scrollY - headerHeight - 120;
 
                 // Increased duration to 3000ms for a very smooth glide
                 smoothScrollTo(offsetPosition, 3000);
