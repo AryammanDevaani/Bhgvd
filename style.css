@@ -127,16 +127,16 @@ nav {
     width: 115px;
     text-align: center;
     display: inline-block;
-    border-bottom: 2px solid var(--text-secondary);
+    border-bottom: 1px solid var(--text-secondary);
 }
 
 .nav-link:hover{
     color: var(--accent-gold);
-    border-bottom: 2px solid var(--accent-gold)
+    border-bottom: 1px solid var(--accent-gold)
 }
 .nav-link.active {
     color: var(--accent-gold);
-    border-bottom: 2px solid var(--accent-gold);
+    border-bottom: 1px solid var(--accent-gold);
 }
 
 .container {
